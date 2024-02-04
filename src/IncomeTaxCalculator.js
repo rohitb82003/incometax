@@ -6,19 +6,22 @@ const IncomeTaxCalculator = () => {
 
   const calculateTax = () => {
     const income = parseFloat(taxableIncome);
-    const brackets = [10000, 50000];
-    const rates = [0.1, 0.2, 0.3];
     let tax = 0;
 
-    if (income <= brackets[0]) {
-      tax = income * rates[0];
-    } else if (income <= brackets[1]) {
-      tax = brackets[0] * rates[0] + (income - brackets[0]) * rates[1];
+    if (income <= 9225) {
+      tax = income * 0.1;
+    } else if (income <= 37450) {
+      tax = 922.5 + (income - 9225) * 0.15;
+    } else if (income <= 90750) {
+      tax = 5156.25 + (income - 37450) * 0.25;
+    } else if (income <= 189300) {
+      tax = 18481.25 + (income - 90750) * 0.28;
+    } else if (income <= 411500) {
+      tax = 46075.25 + (income - 189300) * 0.33;
+    } else if (income <= 413200) {
+      tax = 119401.25 + (income - 411500) * 0.35;
     } else {
-      tax =
-        brackets[0] * rates[0] +
-        (brackets[1] - brackets[0]) * rates[1] +
-        (income - brackets[1]) * rates[2];
+      tax = 119996.25 + (income - 413200) * 0.396;
     }
 
     setCalculatedTax(tax);
@@ -30,19 +33,19 @@ const IncomeTaxCalculator = () => {
       fontSize: '100%',
       backgroundColor: 'white',
       width: '730px',
-      margin: '20px 0 0 20px', // Adjusted the margin to place it on the top-left
+      margin: '20px 0 0 20px',
       border: '3px solid blue',
-      padding: '0 2em 1em',
+      padding: '20px', 
       textAlign: 'left',
-      color: 'blue'
+      color: '#333', 
     }}>
       <h1 style={{
         fontSize: '150%',
-        marginBottom: '.5em'
+        marginBottom: '1em',
       }}>Income Tax Calculator</h1>
       <label style={{
         display: 'block',
-        marginBottom: '10px'
+        marginBottom: '10px',
       }}>
         Enter Taxable Income:
         <input
@@ -55,33 +58,40 @@ const IncomeTaxCalculator = () => {
             marginBottom: '10px',
             boxSizing: 'border-box',
             borderRadius: '5px',
-            border: '1px solid blue'
+            border: '1px solid blue',
           }}
         />
       </label>
       <button style={{
         background: 'blue',
-        color: 'white',
+        color: '#fff',
         padding: '10px 20px',
         border: 'none',
         borderRadius: '5px',
-        cursor: 'pointer'
+        cursor: 'pointer',
       }} onClick={calculateTax}>
         Calculate
       </button>
 
       {calculatedTax !== null && (
-        <div style={{ marginTop: '20px' }}>
+        <div style={{
+          marginTop: '20px',
+          border: '1px solid blue',
+          padding: '10px',
+          borderRadius: '5px',
+          backgroundColor: '#fff', 
+        }}>
           <label style={{
             display: 'block',
-            marginBottom: '10px'
+            marginBottom: '10px',
+            color: 'blue',
           }}>
             Income tax owed:
           </label>
           <p style={{
             fontSize: '20px',
             fontWeight: 'bold',
-            color: 'blue'
+            color: 'blue',
           }}>
             ${calculatedTax.toFixed(2)}
           </p>
